@@ -10,6 +10,9 @@ trait KeyConstants
     public static $DATA = 'data';
 
     public static $INCORRECTUSERCREDENTIALS ="Incorrect user credentials.";
+    public static $ERRORADDINGGOVERNMENTPROOFS ="Error while updating the government proofs.";
+    public static $ERRORADDINGBANKDETAILS ="Error while updating the bank details.";
+    public static $ERRORUPDATINGPASSWORD ="Issue while updating the password.";
     public static $USERNOTEXIST = 'User does not exists.';
     public static $USEREXIST = 'User already exists. Please login or try again with different email address.';
     public static $ERRORCREATINGUSER = 'There was some error while creating a user.';

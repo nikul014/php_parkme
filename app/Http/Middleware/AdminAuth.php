@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 
-class ParkingAuth
+class AdminAuth
 {
 
     use KeyConstants;
@@ -22,7 +22,7 @@ class ParkingAuth
     {
 
         $validation = Validator::make($arrParameters->header(), [
-            'user-id' => KeyConstants::$REQUIRED,
+            'staff-id' => KeyConstants::$REQUIRED,
             'token' => KeyConstants::$REQUIRED,
         ]);
 
@@ -34,7 +34,8 @@ class ParkingAuth
 
         $strDefaultToken = '1q2w3e4r5t6y';
         $strToken = $arrParameters->header('token');
-        $userId = $arrParameters->header('user-id');
+        $userId = $arrParameters->header('staff-id');
+
         if ($strToken == $strDefaultToken && (env('APP_ENV') == 'local')) {
             return $next($arrParameters);
         }
@@ -45,7 +46,7 @@ class ParkingAuth
             $arrResponse[KeyConstants::$DESCRIPTION] = KeyConstants::$CODE__3_DESCRIPTION;
             return Response::json($arrResponse);
         }
-        $arrParameters['user_id']=$userId;
+        $arrParameters['staff_id']=$userId;
         return $next($arrParameters);
 
     }
@@ -53,9 +54,9 @@ class ParkingAuth
     public function validateToken($strToken, $userId)
     {
         try{
-            $strSQL = DB::table('userdetails')
+            $strSQL = DB::table('staff_details')
                 ->where('token', '=', $strToken)
-                ->where('user_id', '=', $userId);
+                ->where('staff_id', '=', $userId);
             return $strSQL->get()->count();
         }
         catch(QueryException $exception){
